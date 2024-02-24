@@ -2,12 +2,11 @@
 // 不修改第13行以及不移动第10行的前提下让我可以编译！
 // 执行 `rustlings hint move_semantics2` 或在观察模式下使用 `hint` 子命令来获取提示。
 
-// I AM NOT DONE
 
 fn main() {
     let vec0 = Vec::new();
 
-    let mut vec1 = fill_vec(vec0);
+    let mut vec1 = fill_vec(vec0.clone());
 
     // 不要改变下面这一行！
     println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);

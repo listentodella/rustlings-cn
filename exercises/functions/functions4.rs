@@ -6,14 +6,13 @@
 // （不要担心函数体本身，我们现在只对函数签名感兴趣。
 // 如果有的话，这是一个提前了解未来练习的好方法。）
 
-// I AM NOT DONE
 
 fn main() {
     let original_price = 51;
     println!("你的售价为 {}", sale_price(original_price));
 }
 
-fn sale_price(price: i32) -> {
+fn sale_price(price: i32) -> i32{
     if is_even(price) {
         price - 10
     } else {

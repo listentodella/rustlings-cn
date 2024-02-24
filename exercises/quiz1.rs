@@ -11,10 +11,15 @@
 // 这次没有提示！
 
 
-// I AM NOT DONE
 
 // 将你的函数放在这里！
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(num:i32) -> i32 {
+    if num <= 40 {
+        num * 2
+    } else {
+        num
+    }
+}
 
 // 不要修改这个函数
 #[test]

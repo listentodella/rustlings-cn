@@ -13,7 +13,6 @@
 
 // 执行 `rustlings hint hashmaps3` 或在观察模式下使用 `hint` 子命令来获取提示。
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -34,9 +33,34 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         let team_1_score: u8 = v[2].parse().unwrap();
         let team_2_name = v[1].to_string();
         let team_2_score: u8 = v[3].parse().unwrap();
+
         // TODO: 使用从当前行提取的详细信息填充得分表。
         // 请记住，队伍1的得分将会是队伍2的丢分，
         // 同样，队伍2的得分也将会是队伍1的丢分。
+        let team = Team {
+            name: team_1_name,
+            goals_scored:0,
+            goals_conceded:0
+        };
+
+        let team = scores.entry(team.name.clone()).or_insert(team);
+        team.goals_scored += team_1_score;
+        team.goals_conceded += team_2_score;
+
+        let team = Team {
+            name: team_2_name,
+            goals_scored:0,
+            goals_conceded:0
+        };
+
+        let team = scores.entry(team.name.clone()).or_insert(team);
+        team.goals_scored += team_2_score;
+        team.goals_conceded += team_1_score;
+
+        /*scores.entry(team.name).and_modify(|team| {
+            team.goals_scored;
+            lost += team.goals_conceded
+        }).or_insert(team);*/
     }
     scores
 }
