@@ -22,13 +22,16 @@ impl ParsePosNonzeroError {
         ParsePosNonzeroError::Creation(err)
     }
     // TODO: 在这里添加另一个错误转换函数。
-    // fn from_parseint...
+    fn from_parseint(err:ParseIntError)-> ParsePosNonzeroError {
+        ParsePosNonzeroError::ParseInt(err)
+    }
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
     // TODO: 改变这里以返回一个适当的错误，而不是在
     // `parse()` 返回错误时发生 panic。
-    let x: i64 = s.parse().unwrap();
+    //let x: i64 = s.parse().unwrap();
+    let x: i64 = s.parse()?;
     PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
 }
 
