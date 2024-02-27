@@ -6,7 +6,6 @@
 
 // 执行 `rustlings hint errors6` 或在观察模式下使用 `hint` 子命令来获取提示。
 
-// I AM NOT DONE
 
 use std::num::ParseIntError;
 
@@ -28,10 +27,10 @@ impl ParsePosNonzeroError {
 }
 
 fn parse_pos_nonzero(s: &str) -> Result<PositiveNonzeroInteger, ParsePosNonzeroError> {
-    // TODO: 改变这里以返回一个适当的错误，而不是在
-    // `parse()` 返回错误时发生 panic。
+    // TODO: 改变这里以返回一个适当的错误，而不是 `parse()` 返回错误时发生 panic。
     //let x: i64 = s.parse().unwrap();
-    let x: i64 = s.parse()?;
+    //NOTE: 1.注意parse的返回值类型是Result 2.map_err的返回值类型也是Result 3.?可以提取出Ok(T)和Err(E)里的具体值
+    let x: i64 = s.parse().map_err(ParsePosNonzeroError::from_parseint)?;
     PositiveNonzeroInteger::new(x).map_err(ParsePosNonzeroError::from_creation)
 }
 
