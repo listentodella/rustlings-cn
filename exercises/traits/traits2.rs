@@ -8,13 +8,19 @@
 // 你可以做到的！
 // 执行 `rustlings hint traits2` 或在观察模式下使用 `hint` 子命令来获取提示。
 
-// I AM NOT DONE
 
 trait AppendBar {
     fn append_bar(self) -> Self;
 }
 
 // TODO: 为 string 类型的 vector 实现 `AppendBar` 特性。
+impl AppendBar for Vec<String> {
+    fn append_bar(self) -> Self {
+        let mut tmp = self;
+        tmp.push("Bar".to_owned());
+        tmp
+    }
+}
 
 #[cfg(test)]
 mod tests {
