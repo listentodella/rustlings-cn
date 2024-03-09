@@ -5,7 +5,7 @@
 
 // I AM NOT DONE
 
-use std::sync::Arc;
+use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -14,13 +14,14 @@ struct JobStatus {
 }
 
 fn main() {
-    let status = Arc::new(JobStatus { jobs_completed: 0 });
+    let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
     let mut handles = vec![];
     for _ in 0..10 {
         let status_shared = Arc::clone(&status);
         let handle = thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
             // TODO: 在更新共享值之前，你还需要做点什么
+            let mut status_shared = status_shared.lock().unwrap();
             status_shared.jobs_completed += 1;
         });
         handles.push(handle);
@@ -29,6 +30,6 @@ fn main() {
         handle.join().unwrap();
         // TODO: 打印 JobStatus.jobs_completed 的值。你可以从输出中注意到有趣的东西吗？
         // 你必须要 'join' 所有的线程句柄吗？
-        println!("jobs completed {}", ???);
+        println!("jobs completed {}", status.lock().unwrap().jobs_completed);
     }
 }
