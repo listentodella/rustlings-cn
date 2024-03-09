@@ -9,7 +9,6 @@
 //
 // 让代码可以编译，测试可以通过。
 
-
 use std::collections::HashMap;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -32,7 +31,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map是一个有 String 键和 Progress 值的哈希表。
     // map = { "variables1": Complete, "from_str": None, ... }
-    map.values().into_iter().filter(|&x| *x == value).count()
+    map.values().filter(|&x| *x == value).count()
     // 下面的方法也可以，不过不够爽
     //map.values().into_iter().
     //    fold(0, |mut sum, x| {
@@ -61,15 +60,16 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
     //     { "variables2": Complete, ... }, ... ]
 
     // solution 1
-    collection.into_iter().
-        map(|x| x.values().into_iter().filter(|&x| *x == value ).count())
-        .sum()
+    //collection
+    //    .into_iter()
+    //    .map(|x| x.values().into_iter().filter(|&x| *x == value).count())
+    //    .sum()
 
     // solution 2
-    //collection.into_iter(). //    fold(0, |mut sum, x| {
-    //        sum += x.values().into_iter().filter(|&x| *x == value).count();
-    //        sum
-    //    })
+    collection.into_iter().fold(0, |mut sum, x| {
+        sum += x.values().into_iter().filter(|&x| *x == value).count();
+        sum
+    })
 }
 
 #[cfg(test)]
