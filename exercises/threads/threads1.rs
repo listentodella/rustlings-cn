@@ -2,13 +2,10 @@
 // 执行 `rustlings hint threads1` 或在观察模式下使用 `hint` 子命令来获取提示。
 // 这个程序应等待所有派生线程完成后再退出。
 
-
 use std::thread;
 use std::time::Duration;
 
-
 fn main() {
-
     let mut handles = vec![];
     for i in 0..10 {
         handles.push(thread::spawn(move || {
@@ -27,5 +24,4 @@ fn main() {
     if completed_threads != 10 {
         panic!("Oh no! All the spawned threads did not finish!");
     }
-    
 }

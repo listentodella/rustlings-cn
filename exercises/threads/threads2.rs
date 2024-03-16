@@ -3,8 +3,6 @@
 // 基于上一个练习，我们想要所有线程完成它们的工作，但是这回
 // 派生线程需要需要负责更新一个共享的值： JobStatus.jobs_completed
 
-// I AM NOT DONE
-
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -21,8 +19,7 @@ fn main() {
         let handle = thread::spawn(move || {
             thread::sleep(Duration::from_millis(250));
             // TODO: 在更新共享值之前，你还需要做点什么
-            let mut status_shared = status_shared.lock().unwrap();
-            status_shared.jobs_completed += 1;
+            status_shared.lock().unwrap().jobs_completed += 1;
         });
         handles.push(handle);
     }
