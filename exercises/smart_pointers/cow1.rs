@@ -5,7 +5,6 @@
 // 它可以封装并提供一个借用数据的不可变访问，并当需要修改或所有权时克隆数据。
 // 该类型旨在通过 Borrow trait 处理一般借用数据。
 
-
 use std::borrow::Cow;
 
 fn abs_all<'a, 'b>(input: &'a mut Cow<'b, [i32]>) -> &'a mut Cow<'b, [i32]> {
@@ -40,7 +39,6 @@ fn main() {
     let slice = vec![-1, 0, 1];
     let mut input = Cow::from(slice);
     match abs_all(&mut input) {
-        // TODO
         Cow::Owned(_) => println!("I own this slice!"),
         _ => panic!("expected borrowed value"),
     }

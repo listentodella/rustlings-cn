@@ -11,12 +11,10 @@
 // 由于我们在使用线程，我们的值需要是线程安全的。因此，
 // 我们使用 Arc。我们需要改变两个 TODO 处的内容。
 
-
 // 通过填充第一个 TODO 注释处的 `shared_numbers` 的值使代码编译，
 // 并为第二个 TODO 注释处的 `child_numbers` 创建一个初始化绑定。
 // 尝试不要创建 `numbers` Vec 的任何副本！
 // 执行 `rustlings hint arc1` 或在观察模式下使用 `hint` 子命令来获取提示。
-
 
 #![forbid(unused_imports)] // Do not change this, (or the next) line.
 use std::sync::Arc;
@@ -24,11 +22,13 @@ use std::thread;
 
 fn main() {
     let numbers: Vec<_> = (0..100u32).collect();
-    let shared_numbers = Arc::new(numbers);// TODO
+    let shared_numbers = Arc::new(numbers);
     let mut joinhandles = Vec::new();
 
     for offset in 0..8 {
-        let child_numbers = Arc::clone(&shared_numbers);// TODO
+        // 两种方式是等效的
+        //let child_numbers = Arc::clone(&shared_numbers);
+        let child_numbers = shared_numbers.clone();
         joinhandles.push(thread::spawn(move || {
             let sum: u32 = child_numbers.iter().filter(|n| *n % 8 == offset).sum();
             println!("Sum of offset {} is {}", offset, sum);
