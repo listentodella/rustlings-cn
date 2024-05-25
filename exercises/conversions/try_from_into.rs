@@ -22,8 +22,6 @@ enum IntoColorError {
     IntConversion,
 }
 
-// I AM NOT DONE
-
 // 你的任务是完成这个实现并返回一个 Ok 结果，内含一个 Color 类型。
 // 你需要针对一个包含三个整数的元组、一个包含三个整数的数组以及一个整数切片创建实现。
 //
@@ -35,6 +33,19 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let target = (
+            u8::try_from(tuple.0),
+            u8::try_from(tuple.1),
+            u8::try_from(tuple.2),
+        );
+        match target {
+            (Ok(r), Ok(g), Ok(b)) => Ok(Color {
+                red: r,
+                green: g,
+                blue: b,
+            }),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
@@ -42,6 +53,19 @@ impl TryFrom<(i16, i16, i16)> for Color {
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let target = (
+            u8::try_from(arr[0]),
+            u8::try_from(arr[1]),
+            u8::try_from(arr[2]),
+        );
+        match target {
+            (Ok(r), Ok(g), Ok(b)) => Ok(Color {
+                red: r,
+                green: g,
+                blue: b,
+            }),
+            _ => Err(Self::Error::IntConversion),
+        }
     }
 }
 
@@ -49,6 +73,24 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        match slice.len() {
+            3 => {
+                let target = (
+                    u8::try_from(slice[0]),
+                    u8::try_from(slice[1]),
+                    u8::try_from(slice[2]),
+                );
+                match target {
+                    (Ok(r), Ok(g), Ok(b)) => Ok(Color {
+                        red: r,
+                        green: g,
+                        blue: b,
+                    }),
+                    _ => Err(Self::Error::IntConversion),
+                }
+            }
+            _ => Err(Self::Error::BadLen),
+        }
     }
 }
 
